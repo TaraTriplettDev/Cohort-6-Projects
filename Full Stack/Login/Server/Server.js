@@ -2,12 +2,14 @@ const express = require('express')
 const app = express()
 const cors = require("cors")
 const mongoose = require("mongoose")
-
 require('dotenv').config()
-
 const bcrypt = require('bcrypt')
-
 const port = process.env.PORT || 5000;
+const Router = require("./routes/routes.js")
+
+
+
+
 
 app.use(express.json()) // Gives access to the req.body
 
@@ -16,10 +18,17 @@ app.use(cors({
     // credentials: true
 }))
 
-app.get("/test", (req, res) => {
-    console.log("TEST route HIT!!!")
-    res.json({ msg: "Hello World!"})
-})
+// app.get("/test", (req, res) => {
+//     console.log("TEST route HIT!!!")
+//     res.json({ msg: "Hello World!"})
+// })
+
+// app.post('/api/registration', (req, res) => {
+//     console.log('reg hit', req-body)
+//     req.json({ msg: 'reg hit!!!!for reg login submit'})
+// })
+
+Router(app)
 
 // app.post("/api/registration")
 
