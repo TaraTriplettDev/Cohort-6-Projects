@@ -29,20 +29,3 @@ const UserSchema = new Schema(
 )
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
-
-
-const Router = require("./routes/routes.js")
-
-
-require('dotenv').config()
-
-const bcrypt = require('bcrypt')
-
-const port = process.env.PORT || 5000;
-
-app.use(express.json()) // Gives access to the req.body
-
-app.use(cors({
-    origin: "http://localhost:5173",
-    //credentials: true
-}))

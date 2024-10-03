@@ -59,7 +59,24 @@ const Registration = () => {
             <br />
 
             <button onClick={(e) => handleSubmit(e)}>Submit</button>
+            <br />
+            <br /> 
+            <br />
+            <br /> 
 
+            {/* <div>User Login</div>
+            <br />
+            <br />
+
+            <input name="username" placeholder='username' onChange={(e) => handleChange(e)}></input>
+            <br />
+            <br />
+
+            <input name="password" placeholder='password' onChange={(e) => handleChange(e)}></input>
+            <br />
+            <br />
+
+            <button onClick={(e) => handleSubmit(e)}>Log In</button> */}
         </>
     )
 } 
