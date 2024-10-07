@@ -23,6 +23,10 @@ createRoot(document.getElementById('root')).render(
 
           <Route path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Registration />} />
+
+          <Route element={<ProtectedRoutes />} />
+          
           <Route path="/landing" element={<Landing />} />
 
         </Routes>

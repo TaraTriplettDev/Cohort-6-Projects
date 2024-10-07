@@ -5,6 +5,9 @@ const mongoose = require("mongoose")
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const port = process.env.PORT || 5000;
+
+app.use(cookieParser()) // give access to req.cookies
+app.use(express.json())
 const Router = require("./routes/routes.js")
 
 

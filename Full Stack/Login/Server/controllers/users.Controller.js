@@ -1,6 +1,7 @@
 const User = require("../models/users.model");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const JWT = require("jsonwebtoken");
 
 module.exports = {
 
@@ -53,12 +54,48 @@ module.exports = {
                 }   if (!passwordMatch) {
                         res.jason({ msg: 'Invalid Login' })
                 } else {
-                    res.json({ msg: 'Happy Login!', found })
+
+                    const payload = {
+                        username: found.username,
+                        _id: found._id,
+                        email: found.email
+                    }
+
+                    const token = JWT.sign(payload, process.env.SECRETKEY, {expiresIn: "1h"})
+
+                    console.log("token", token)
+
+                    // found.token = token
+                    found.isOnline = true
+                    found.save()
+
+
+
+                    res.cookie('jwt', token, { httpOnly: true, secure: false, maxAge: 3600000 })
+                        .status(200)
+                        .json({ message: "Logged in successfully", token: token, found })
                 }
             })
     },
+    authed (req, res) => {
+        if (!req.cookies['jwt']) {
 
-    registerUser: (req, res) => {
+            console.log("no cookie")
+            res.json({ msg: "Not Authed" })
+        }
+        if (req.cookies['jwt']) {
+            console.log("about to verify")
+            let decode = JWT.verify(req.cookies['jwt'], process.env.SECRETKEY)
+            console.log("JWT verified", decode)
+            if (decode._id) {}
+            User.findById(decode._id)
+                    .then(found => {
+                        res.json(found)
+                    })
 
-    },
-}
+            } else {
+                res.json({ message: "token expired" })
+            }
+
+        }
+    }
