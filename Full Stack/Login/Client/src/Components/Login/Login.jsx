@@ -1,61 +1,45 @@
 import React, { useState } from 'react'
 import axios from "axios"
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import { useData } from '../../hooks/context-hook'
+import Registration from '../Registration/Registration'
 
 
 const Login = () => {
-    const handleLogin = (e) => {
-        e.preventDefault()
-        console.log('handleLogin hit')
-        axios({
-            method: 'post',
-            url: 'http://localhost:3002/api/login',
-            data: login,
-            withCredentials: true
-        })
 
-            .then((res) => {
-                console.warn('res.data--', res.data)
-                handleLoggedInUser(res.data.found)
-                navigate('/landing')
-                // console.warn('res.body==', res.body)
-            })
-            .catch(err => console.log(err))
-    }
-
-    const handleRegisterRedirect = () => {
-        navigate('/register'); // Navigate to the Register Page
-    }
-
-    const navigate = useNavigate()
+    const nav = useNavigate()
 
     const { handleLoggedInUser } = useData()
 
-// const handleLoginSubmit = (e) => {
-//     e.preventDefault()
-//     axios({
-//         method: 'post',
-//         url: 'http://localhost:3002/api/login',
-//         loginData: loginData
-//     })
-//     .then((res) => {
-//         console.log('res', res)
-//     })
-//     .catch(err => console.log(err))
-// }
+    const { login, setLogin} = useState({})
 
+    const { reg, setReg } = useState(false)
 
-    return (
-        <div className="loginCont">
+    const handleRegister = () => {
+        setReg(!reg)
+    }
 
-            <div className="login">Login</div>
+    const handleChange = (e) => {
+        setLogin((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
+    }
 
-        
-        <div className="loginInputs">
-            
-        </div>
-        </div>
-    )
+    const handleSubmit = (e) => {
 
+        axios({
+            method: "POST",
+            url: "http://localhost:3002/api/login",
+            data: login
+        })
+            .then(res => {
+                // console.log("res", res.data.found)
+                handleLoggedInUser(res.data.found)
+                nav("/landing")
+            })
+            .catch(err => console.log(err))
+
+    }
 }

@@ -16,8 +16,10 @@ module.exports = {
         const { username, password, first, last, email } = req.body
 
         User.findOne({ username: req.body.username })
+
             .then((found) => {
                 console.log("found", found)
+
                 if (!found) {
                     const hash = bcrypt.hashSync(password, 10)
                     const newUser = new User({
@@ -32,7 +34,7 @@ module.exports = {
                         .then((created) => {
                             console.log('created==', created)
                             created.save()
-                            res.json({ msg: 'successful reg', created })
+                            // res.json({ msg: 'successful reg', created })
                 })
             } else {
                 res.json({ msg: 'invalid Reg'})
@@ -77,6 +79,51 @@ module.exports = {
                 }
             })
     },
+
+    logout: (req, res) => {
+        console.log("req.params", req.params)
+        User.findById(req.params.id)
+        .then(found => {
+            console.log("found", found)
+            found.isOnline = false
+            found.save()
+        })
+    },
+
+
+
+    createUser: (req, res) => {
+        
+        console.log("CREATE USER req.body", req.body)
+
+    //     User.find({ username: req.body.username })
+
+    //     then((found) => {
+
+    //     if (found.length) {
+
+    //     res.json({ message: "Error". Error: "Username already exists"});
+
+    //     } else {
+    
+    //     console.log("else hit on create")
+
+    //     const bash = bcrypt.hashSync(req.body.password, 10);
+    //     const newUser = new User({
+    //         username: req.body.username,
+    //         password: bash,
+    //     });
+    //     User.create(newUser)
+    //         .then((created) => {
+    //             res.json({ message: "success", user: created });
+    //         })
+    //         .catch(err) => console.log("create user error", err)
+    // }
+    // });
+},
+
+
+
     authed (req, res) => {
         if (!req.cookies['jwt']) {
 
