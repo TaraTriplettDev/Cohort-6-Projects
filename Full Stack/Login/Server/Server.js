@@ -2,23 +2,21 @@ const express = require('express')
 const app = express()
 const cors = require("cors")
 const mongoose = require("mongoose")
-require('dotenv').config()
 const bcrypt = require('bcrypt')
+const Router = require("./routes/routes.js")
+const cookieParser = require('cookie-parser'); // gives ability to view cookies
+const Router = require("./routes/routes.js")
+
+require('dotenv').config()
+
 const port = process.env.PORT || 5000;
 
 app.use(cookieParser()) // give access to req.cookies
-app.use(express.json())
-const Router = require("./routes/routes.js")
-
-
-
-
-
 app.use(express.json()) // Gives access to the req.body
 
 app.use(cors({
-    origin: "http://localhost:5173",
-    // credentials: true
+    origin: ["http://localhost:5173", "http://localhost:5174" ],
+    credentials: true
 }))
 
 // app.get("/test", (req, res) => {
@@ -33,7 +31,9 @@ app.use(cors({
 
 Router(app)
 
-// app.post("/api/registration")
+// app.post("/api/registration", (req, res) => {
+
+// })
 
 app.listen(port, () => {
     mongoose.connect(process.env.MONGO_URI).then(() => {
