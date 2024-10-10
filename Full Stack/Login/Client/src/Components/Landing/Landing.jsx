@@ -1,45 +1,36 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-
-import { useData } from "../../hooks/context-hook"
-
+import { useData } from "../../hooks/ContextHook";
 
 const Landing = () => {
+  const nav = useNavigate();
 
-    const nav = useNavigate()
+  const { authedUser, handleLogout } = useData();
 
-    const { authedUser, handleLogout } = useData()
+  useEffect(() => {
+    console.log("UseEffect Fired!!!", authedUser);
+    if (!authedUser._id) {
+      nav("/");
+    }
+  }, [authedUser]);
 
-    useEffect(() => {
-        console.log("UseEffect Fired!!!", authedUser)
-        if (!authedUser._id){
+  return (
+    <>
+      {console.log("authed", authedUser)}
 
-            nav("/")
-        }
- 
-    }, [authedUser])
+      <div>Landing</div>
 
+      <p>{`Welcome Back ${authedUser.username}`}</p>
 
+      <br />
+      <br />
+      <br />
+      <br />
 
-    return (
-        <>
-            {console.log("authed", authedUser)}
+      <button onClick={handleLogout}>Logout</button>
+    </>
+  );
+};
 
-            <div>Landing</div>
-
-            <p>{`Welcome Back ${authedUser.username}`}</p>
-
-            <br />
-            <br />
-            <br />
-            <br />
-
-            <button onClick={handleLogout}>Logout</button>
-
-        </>
-        
-    )
-}
-
-export default Landing
+export default Landing;
