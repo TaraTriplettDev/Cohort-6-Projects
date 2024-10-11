@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
-import { useData } from "../../hooks/ContextHook";
+import { useData } from "../../hooks/context-hook";
 import Registration from "../Registration/Registration";
 
 const Login = () => {
@@ -36,7 +36,7 @@ const Login = () => {
       .then((res) => {
         console.warn("res.data==", res.data);
         handleLoggedInUser(res.data.found);
-        nav("/landing");
+        nav("/blog");
         // console.warn('res.body==', res.body)
       })
       .catch((err) => console.log(err));

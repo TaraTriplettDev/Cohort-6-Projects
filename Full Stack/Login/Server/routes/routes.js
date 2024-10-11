@@ -1,6 +1,12 @@
 const UserController = require("../controllers/users.Controller");
-
+const FeedController = require("../controllers/feedController");
+// const AuthCheck = require("../middleware/AuthCheck");
+const User = require("../models/users.model");
 module.exports = (app) => {
+
+
+  app.get("/test", UserController.testRoute);
+
   app.get("/test", UserController.testRoute);
 
   app.post("/api/registration", UserController.registration);
@@ -8,11 +14,23 @@ module.exports = (app) => {
   app.post("/api/login", UserController.login);
   // console.log('login part')
 
-  // app.get('/api/logout.id', UserController.logout)
+  app.get('/api/logout.id', UserController.logout)
 
-  app.post("/api/authed", UserController.authed);
+  app.get("/api/auth", UserController.userAuth);
+
+  // app.get("/api/finduser/:id", UserController.findUsers);
+
+  // app.get("/api/allUsers", UserController.allUsers);
+
 
   // app.get('/test/UsersCreative/')
 
-  app.get("/api/logout/:id", UserController.logout);
+  // *********************************************
+  // Feed Routes
+
+  app.get("/api/feeds", FeedController.getFeeds);
+  app.post("/api/createFeed", FeedController.createFeed);
+
 };
+
+// app.get("/test", userController, testRoute)

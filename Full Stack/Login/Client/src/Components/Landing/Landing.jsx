@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useData } from "../../hooks/ContextHook";
+import { useData } from "../../hooks/context-hook";
 
 const Landing = () => {
   const nav = useNavigate();

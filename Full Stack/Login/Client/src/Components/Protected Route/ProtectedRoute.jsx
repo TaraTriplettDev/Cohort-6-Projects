@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Outlet, Navigate, useNavigation } from "react-router-dom";
 import axios from "axios";
-import { useData } from "../../hooks/ContextHook";
+import { useData } from "../../hooks/context-hook";
 import Landing from "../Landing/Landing";
 // import Layout from '../Layout/Layout'
 

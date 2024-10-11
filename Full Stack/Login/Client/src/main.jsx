@@ -8,13 +8,13 @@ import { BrowserRouter, Routes, Route } from "react";
 import Login from "./Components/Login/Login.jsx";
 // import Layout from "./Components/Layout/Layout.jsx";
 import Registration from "./Components/Registration/Registration.jsx";
-// import Blog from "./Components/Blog/Blog.jsx"
+import Blog from "./Components/Blog/Blog.jsx"
 import Landing from "./Components/Landing/Landing.jsx";
-import { MyProvider } from "./hooks/ContextHook.jsx";
+import { MyProvider } from "./hooks/context-hook.jsx";
 import ProtectedRoute from "./Components/Protected Route/ProtectedRoute.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <>
     <MyProvider>
       <BrowserRouter>
         <Routes>
@@ -26,13 +26,13 @@ createRoot(document.getElementById("root")).render(
           {/* <App /> */}
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/landing" element={<Landing />} />
+            <Route path="/landing" element={<Landing />} />          
+            <Route path="/blog" element={<Blog />} />
+
           </Route>
           {/* <Route path="/layout" element={<Layout />} /> */}
-          {/* <Route path="/blog" element={<Blog />} /> */}
         </Routes>
       </BrowserRouter>
     </MyProvider>
-    <App />
-  </React.StrictMode>
+  </>
 );
