@@ -1,133 +1,93 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from "react"
+import { useData } from "../../hooks/context-hook"
+import BlogModal from "./BlogModal"
 import "./blog.css"
-import Card from "./Card"
-
-// What do we need to make a working blog?
-// need a way to capture a users input onChange   <input>  or  <textarea>
-// need a handler to collect the onChange and store in state
-// We need somewhere to hold the new text that was submitted
-// useState
-// Need state to hold all the blog posts
-// need to map through all the posts to render on screen
-// need a submit button onClick and a handler to update the main blog state with
-// new blog or comment 
+import axios from "axios"
 
 
 
 const Blog = () => {
 
-  const [newz, setNewBlog] = useState("")  //  new blog
-  const [blogs, setBlogs] = useState([])  //  all blogs
-
-  // const [edit, setEdit] = useState(false)
-
-  const handleChange = (e) => {
-    setNewBlog(e.target.value)
-  }
-
-
-  const handleSubmit = () => {
-    if (newBlog.length > 0) {
-      setBlogs((prev) => {
-        return [...prev, newBlog];
-      });
-      setNewBlog("")
-    }
-  }
-
-
-  ////////////////////////////////////////////////////////
-
-  const handleDelete = (e) => {
-    console.log("DELETE HIT", e.target.id)
-
-    let filter = blogs.filter((item) => item !== e.target.id)
-
-    setBlogs(filter)
-
-    console.log("filter", filter)
-  }
-
-  //////////////////////////////////////////////////////////
-
-  const handleUpdateEdit = (id, editPost) => {
-    console.log("handleUpdateEdit", id)
-    console.warn("id =", id, "editPost = ", editPost)
-    console.warn("blogs.indexOf(id)", blogs.indexOf(id))
-
-    
-    // console.warn("slice(1,index)", blogs.slice(0, index))
-    // console.warn("slice(index)", blogs.slice(index + 1))
-    
-    // console.warn([...blogs.slice(0, index), editPost, ...blogs.slice(index + 1)])
-    
-    // setBlogs([...blogs.slice(0, index), editPost, ...blogs.slice(index + 1)])
-    let index = blogs.indexOf(id)
-
-    let temp = [...blogs]   //create copy of state [ ]
-
-    console.log("temp", temp)
-
-    temp[index] = editPost  //  bracket notation to change value of a specific index to "editpost"
- 
-
-    console.log("all blogs", temp)
-
-    setBlogs(temp)   //  set State to the new array with the updated content
-
-
-    //here we set state to include edited item with slice()
-    // let arr = [   1,    2,    3   ]
-  }
-
-  //use slice to copy before and after it with modified entry
+  const [allFeeds, setAllFeeds] = useState()
 
 
 
+  const { handleModal, modal } = useData()
+
+
+  useEffect(() => {
+
+        axios({
+          method: 'get',
+          url: 'http://localhost:3002/api/getFeeds',
+          withCredentials: true
+        })
+            .then((res) => {
+                console.log("res", res.data)
+                setAllFeeds(res.data)
+            })
+            .catch(err => console.log("err", err))
+
+      // axios to get all feeds from routes, save in local state and map results
+  
+  }, [])
 
 
 
   return (
+      <>
 
-    <>
-      {console.log("blogs", blogs)}
-      {console.log("newBlog", newBlog)}
-      <div>Blog</div>
+        {console.log("allFeeds", allFeeds)}
+        <div id="blog">
 
-      <input
-        value={newBlog}
-        onChange={(e) => handleChange(e)}
-        placeholder="What's on your mind?">
+            <div id="blogHeader">
 
-      </input>
 
-      <button id='blogSubmit' onClick={() => handleSubmit()}>submit</button>
-      <div>
-        {blogs.length
-          ?
-          (
-            blogs.map((item) => {
+                <div id="blogInput">
 
-              return (
+                     <div>
+                        <p onClick={(e) => handleModal(e)}>
 
-                <Card key={item}
-                  item={item} handleUpdateEdit={handleUpdateEdit} handleDelete={handleDelete} />
+                            What's on your mind?
+                        </p>
+                    </div>
+                    {/* open modal for content */}
+                    <br />
+                    {modal && <BlogModal />}
+                    <div> video / photo option </div>
+                        
 
-              )
-            })
-          )
-          :
-          (null)
-        }
+                </div>
+            </div>
 
 
 
-      </div>
+            <div id="blogBody">
 
-    </>
 
+                {allFeeds && allFeeds.length > 0 
+                ?
+                (
+                    allFeeds.map((item) => (
+                        <div id="BlogCardContainer">
+                        <BlogCard key={item.id} item={item} />
+                        </div>
+                    ))
+                )
+                :
+                (
+                    <p>No feeds available</p>
+                )}
+            </div>
+        
+        
+
+
+
+
+
+
+        </div>
+      </>
   )
-
 }
-
-export default Blog

@@ -18,9 +18,11 @@ module.exports = (app) => {
 
   app.get("/api/auth", UserController.userAuth);
 
-  // app.get("/api/finduser/:id", UserController.findUsers);
+  app.get("/api/finduser/:id", UserController.findUsers);
 
-  // app.get("/api/allUsers", UserController.allUsers);
+  app.get("/api/allUsers", UserController.allUsers);
+
+  app.get("/api/addFriend/", AuthCheck, UserController.addFriend);
 
 
   // app.get('/test/UsersCreative/')
@@ -28,7 +30,7 @@ module.exports = (app) => {
   // *********************************************
   // Feed Routes
 
-  app.get("/api/feeds", FeedController.getFeeds);
+  app.get("/api/getFeeds", FeedController.getFeeds);
   app.post("/api/createFeed", FeedController.createFeed);
 
 };

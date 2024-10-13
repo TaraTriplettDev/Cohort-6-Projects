@@ -17,21 +17,23 @@ createRoot(document.getElementById("root")).render(
   <>
     <MyProvider>
       <BrowserRouter>
+
         <Routes>
-          {/* <App /> */}
 
           <Route path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Registration />} />
-          {/* <App /> */}
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="/landing" element={<Landing />} />          
-            <Route path="/blog" element={<Blog />} />
+          <Route elements={<Layout />} />
 
-          </Route>
-          {/* <Route path="/layout" element={<Layout />} /> */}
-        </Routes>
+            <Route element={<Layout />} />
+
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/user/:id" element={<ViewProfile />} />
+
+          </Routes>
+          
       </BrowserRouter>
     </MyProvider>
   </>

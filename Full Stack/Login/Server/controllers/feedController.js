@@ -8,7 +8,12 @@ module.exports = {
 
 
     getFeeds: (req, res) => {
-
+        console.log("GET FEED HIT")
+        Feed.find()
+            .then((found) => {
+                console.log("found", found)
+                res.json(found)
+            })
     },
 
     createFeed: (req, res) => {
