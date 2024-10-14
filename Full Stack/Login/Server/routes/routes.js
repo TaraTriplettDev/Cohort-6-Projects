@@ -7,8 +7,6 @@ module.exports = (app) => {
 
   app.get("/test", UserController.testRoute);
 
-  app.get("/test", UserController.testRoute);
-
   app.post("/api/registration", UserController.registration);
   // console.log('registration part')
   app.post("/api/login", UserController.login);
@@ -16,13 +14,13 @@ module.exports = (app) => {
 
   app.get('/api/logout.id', UserController.logout)
 
-  app.get("/api/auth", UserController.userAuth);
+  app.get("/api/authed", UserController.userAuth);
 
-  app.get("/api/finduser/:id", UserController.findUsers);
+  // app.get("/api/finduser/:id", UserController.findUsers);
 
-  app.get("/api/allUsers", UserController.allUsers);
+  // app.get("/api/allUsers", UserController.allUsers);
 
-  app.get("/api/addFriend/", AuthCheck, UserController.addFriend);
+  // app.get("/api/addFriend/", AuthCheck, UserController.addFriend);
 
 
   // app.get('/test/UsersCreative/')

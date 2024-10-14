@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Outlet, Navigate, useNavigation } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useData } from "../../hooks/context-hook";
 import Landing from "../Landing/Landing";
@@ -8,7 +8,7 @@ import Landing from "../Landing/Landing";
 const ProtectedRoute = () => {
   const { authedUser, handleLoggedInUser } = useData();
 
-  let nav = useNavigation();
+  let nav = useNavigate();
 
   useEffect(() => {
     // if(authedUser._id){
@@ -20,7 +20,7 @@ const ProtectedRoute = () => {
     axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:3002/api/auth/",
+      url: "http://localhost:3002/api/authed/",
     })
       .then((res) => {
         // console.log('res==', res)
@@ -49,7 +49,7 @@ const ProtectedRoute = () => {
   return (
     <>
       {console.log("ProtectedRoute HIT", authedUser)}
-      {authedUser._id ? <Landing /> : nav("/")}
+      {authedUser._id ? <Outlet /> : nav("/")}
     </>
   );
 };

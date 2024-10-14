@@ -35,14 +35,17 @@ const BlogModal = () => {
         .then(res => {
             console.log("res", res)
         })
+        .catch(err => console.log(err))
     
-    
+
+        
     
         // handleModal()
     
     }
 }
 
+export default BlogModal
 
 
 
